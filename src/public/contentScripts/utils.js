@@ -132,6 +132,107 @@
  const changeEvent = new Event("change", { bubbles: true });
  const inputEvent = new Event("input", { bubbles: true });
 
+/**
+ * Create a fresh KeyboardEvent for Shift+Enter (keydown).
+ * Returns a new event each call (events can only be dispatched once).
+ */
+function createShiftEnterKeyDown() {
+  return new KeyboardEvent("keydown", {
+    key: "Enter",
+    code: "Enter",
+    keyCode: 13,
+    which: 13,
+    shiftKey: true,
+    bubbles: true,
+    cancelable: true,
+  });
+}
+
+/**
+ * Create a fresh KeyboardEvent for Shift+Enter (keyup).
+ */
+function createShiftEnterKeyUp() {
+  return new KeyboardEvent("keyup", {
+    key: "Enter",
+    code: "Enter",
+    keyCode: 13,
+    which: 13,
+    shiftKey: true,
+    bubbles: true,
+    cancelable: true,
+  });
+}
+
+/**
+ * Create a fresh ArrowDown keydown event.
+ */
+function createArrowDownEvent() {
+  return new KeyboardEvent("keydown", {
+    key: "ArrowDown",
+    code: "ArrowDown",
+    keyCode: 40,
+    which: 40,
+    bubbles: true,
+    cancelable: true,
+  });
+}
+
+/**
+ * Create a fresh ArrowUp keydown event.
+ */
+function createArrowUpEvent() {
+  return new KeyboardEvent("keydown", {
+    key: "ArrowUp",
+    code: "ArrowUp",
+    keyCode: 38,
+    which: 38,
+    bubbles: true,
+    cancelable: true,
+  });
+}
+
+/**
+ * Create a fresh Enter keydown event (no shift).
+ */
+function createEnterKeyDown() {
+  return new KeyboardEvent("keydown", {
+    key: "Enter",
+    code: "Enter",
+    keyCode: 13,
+    which: 13,
+    bubbles: true,
+    cancelable: true,
+  });
+}
+
+/**
+ * Create a fresh Enter keyup event (no shift).
+ */
+function createEnterKeyUp() {
+  return new KeyboardEvent("keyup", {
+    key: "Enter",
+    code: "Enter",
+    keyCode: 13,
+    which: 13,
+    bubbles: true,
+    cancelable: true,
+  });
+}
+
+/**
+ * Create a fresh Escape keydown event.
+ */
+function createEscapeKeyDown() {
+  return new KeyboardEvent("keydown", {
+    key: "Escape",
+    code: "Escape",
+    keyCode: 27,
+    which: 27,
+    bubbles: true,
+    cancelable: true,
+  });
+}
+
  function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }

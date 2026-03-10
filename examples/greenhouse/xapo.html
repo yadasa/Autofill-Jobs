@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Xapo Bank - Greenhouse React-Select Test Page</title>
+  <style>
+    /* Minimal React-Select styling to simulate Greenhouse */
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 700px; margin: 40px auto; padding: 20px; }
+    h1 { font-size: 1.5rem; color: #333; }
+    .field-group { margin-bottom: 24px; }
+    .field-group label { display: block; font-weight: 600; margin-bottom: 6px; color: #555; font-size: 0.9rem; }
+    
+    /* React-Select outer container */
+    .select__container { position: relative; }
+    .select__control { display: flex; align-items: center; border: 1px solid #ccc; border-radius: 4px; min-height: 38px; background: #fff; cursor: default; }
+    .select__control--outside-label { /* Greenhouse-specific wrapper */ }
+    .select__control:hover { border-color: #999; }
+    .select__control--is-focused { border-color: #2684ff; box-shadow: 0 0 0 1px #2684ff; }
+    .select__value-container { display: flex; flex-wrap: wrap; flex: 1; padding: 2px 8px; align-items: center; position: relative; }
+    .select__single-value { color: #333; margin-left: 2px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .select__placeholder { color: #999; margin-left: 2px; position: absolute; }
+    .select__input-container { margin: 2px; padding-bottom: 2px; padding-top: 2px; visibility: visible; color: #333; flex: 1 1 auto; display: inline-grid; }
+    .select__input-container input { 
+      background: 0px center; border: 0px; color: inherit; font: inherit; opacity: 1; outline: 0; padding: 0; width: 100%;
+      grid-area: 1 / 2; min-width: 2px;
+    }
+    .select__indicators { display: flex; align-items: center; align-self: stretch; flex-shrink: 0; }
+    .select__indicator { color: #ccc; display: flex; padding: 8px; }
+    .select__indicator:hover { color: #999; }
+    .select__indicator-separator { background-color: #ccc; margin-bottom: 8px; margin-top: 8px; width: 1px; align-self: stretch; }
+    
+    /* Dropdown menu */
+    .select__menu { position: absolute; top: 100%; width: 100%; z-index: 100; background: #fff; border-radius: 4px; box-shadow: 0 0 0 1px rgba(0,0,0,.1), 0 4px 11px rgba(0,0,0,.1); margin-top: 4px; display: none; }
+    .select__menu--is-open { display: block; }
+    .select__menu-list { max-height: 200px; overflow-y: auto; padding: 4px 0; }
+    .select__option { padding: 8px 12px; cursor: default; user-select: none; }
+    .select__option--is-focused { background-color: #deebff; }
+    .select__option--is-selected { background-color: #2684ff; color: #fff; }
+    
+    /* Clear indicator */
+    .select__clear-indicator { cursor: pointer; }
+    .select__clear-indicator:hover svg { fill: #d9534f; }
+    
+    /* Status output */
+    #status { margin-top: 30px; padding: 15px; background: #f5f5f5; border-radius: 6px; font-family: monospace; font-size: 0.85rem; white-space: pre-wrap; max-height: 300px; overflow-y: auto; }
+  </style>
+</head>
+<body>
+
+<h1>Xapo Bank — Job Application (Greenhouse React-Select)</h1>
+<p>This simulates Greenhouse's React-Select dropdowns for testing keyboard-driven autofill.</p>
+
+<form id="application-form">
+
+  <!-- Normal text inputs -->
+  <div class="field-group">
+    <label for="first_name">First Name</label>
+    <input type="text" id="first_name" name="first_name" placeholder="First Name" autocomplete="off">
+  </div>
+  <div class="field-group">
+    <label for="last_name">Last Name</label>
+    <input type="text" id="last_name" name="last_name" placeholder="Last Name" autocomplete="off">
+  </div>
+  <div class="field-group">
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" placeholder="Email" autocomplete="off">
+  </div>
+
+  <!-- React-Select: Gender -->
+  <div class="field-group">
+    <label>Gender</label>
+    <div class="select__container select__control--outside-label" data-field="gender">
+      <div class="select__control" role="combobox" aria-expanded="false" aria-haspopup="listbox">
+        <div class="select__value-container">
+          <div class="select__placeholder">Select...</div>
+          <div class="select__single-value" style="display:none;"></div>
+          <div class="select__input-container">
+            <input id="gender" name="gender" type="text" autocomplete="off" aria-label="Gender" tabindex="0" role="combobox" aria-autocomplete="list" aria-expanded="false" value="">
+          </div>
+        </div>
+        <div class="select__indicators">
+          <span class="select__clear-indicator" title="Clear" style="display:none;">✕</span>
+          <span class="select__indicator-separator"></span>
+          <span class="select__indicator select__dropdown-indicator">▾</span>
+        </div>
+      </div>
+      <div class="select__menu" role="listbox" aria-label="Gender options">
+        <div class="select__menu-list">
+          <div class="select__option" role="option" data-value="male">Male</div>
+          <div class="select__option" role="option" data-value="female">Female</div>
+          <div class="select__option" role="option" data-value="nonbinary">Non-binary</div>
+          <div class="select__option" role="option" data-value="decline">Decline to self-identify</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- React-Select: Race -->
+  <div class="field-group">
+    <label>Race / Ethnicity</label>
+    <div class="select__container select__control--outside-label" data-field="race">
+      <div class="select__control" role="combobox" aria-expanded="false" aria-haspopup="listbox">
+        <div class="select__value-container">
+          <div class="select__placeholder">Select...</div>
+          <div class="select__single-value" style="display:none;"></div>
+          <div class="select__input-container">
+            <input id="race" name="race" type="text" autocomplete="off" aria-label="Race" tabindex="0" role="combobox" aria-autocomplete="list" aria-expanded="false" value="">
+          </div>
+        </div>
+        <div class="select__indicators">
+          <span class="select__clear-indicator" title="Clear" style="display:none;">✕</span>
+          <span class="select__indicator-separator"></span>
+          <span class="select__indicator select__dropdown-indicator">▾</span>
+        </div>
+      </div>
+      <div class="select__menu" role="listbox" aria-label="Race options">
+        <div class="select__menu-list">
+          <div class="select__option" role="option" data-value="american_indian">American Indian or Alaska Native</div>
+          <div class="select__option" role="option" data-value="asian">Asian</div>
+          <div class="select__option" role="option" data-value="black">Black or African American</div>
+          <div class="select__option" role="option" data-value="hispanic">Hispanic or Latino</div>
+          <div class="select__option" role="option" data-value="pacific_islander">Native Hawaiian or Other Pacific Islander</div>
+          <div class="select__option" role="option" data-value="white">White</div>
+          <div class="select__option" role="option" data-value="two_or_more">Two or More Races</div>
+          <div class="select__option" role="option" data-value="decline">Decline to self-identify</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- React-Select: Veteran Status -->
+  <div class="field-group">
+    <label>Veteran Status</label>
+    <div class="select__container select__control--outside-label" data-field="veteran_status">
+      <div class="select__control" role="combobox" aria-expanded="false" aria-haspopup="listbox">
+        <div class="select__value-container">
+          <div class="select__placeholder">Select...</div>
+          <div class="select__single-value" style="display:none;"></div>
+          <div class="select__input-container">
+            <input id="veteran_status" name="veteran_status" type="text" autocomplete="off" aria-label="Veteran Status" tabindex="0" role="combobox" aria-autocomplete="list" aria-expanded="false" value="">
+          </div>
+        </div>
+        <div class="select__indicators">
+          <span class="select__clear-indicator" title="Clear" style="display:none;">✕</span>
+          <span class="select__indicator-separator"></span>
+          <span class="select__indicator select__dropdown-indicator">▾</span>
+        </div>
+      </div>
+      <div class="select__menu" role="listbox" aria-label="Veteran Status options">
+        <div class="select__menu-list">
+          <div class="select__option" role="option" data-value="not_veteran">I am not a protected veteran</div>
+          <div class="select__option" role="option" data-value="veteran">I identify as one or more of the classifications of a protected veteran</div>
+          <div class="select__option" role="option" data-value="decline">I don't wish to answer</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- React-Select: Disability Status -->
+  <div class="field-group">
+    <label>Disability Status</label>
+    <div class="select__container select__control--outside-label" data-field="disability">
+      <div class="select__control" role="combobox" aria-expanded="false" aria-haspopup="listbox">
+        <div class="select__value-container">
+          <div class="select__placeholder">Select...</div>
+          <div class="select__single-value" style="display:none;"></div>
+          <div class="select__input-container">
+            <input id="disability" name="disability" type="text" autocomplete="off" aria-label="Disability Status" tabindex="0" role="combobox" aria-autocomplete="list" aria-expanded="false" value="">
+          </div>
+        </div>
+        <div class="select__indicators">
+          <span class="select__clear-indicator" title="Clear" style="display:none;">✕</span>
+          <span class="select__indicator-separator"></span>
+          <span class="select__indicator select__dropdown-indicator">▾</span>
+        </div>
+      </div>
+      <div class="select__menu" role="listbox" aria-label="Disability Status options">
+        <div class="select__menu-list">
+          <div class="select__option" role="option" data-value="yes">Yes, I have a disability (or previously had a disability)</div>
+          <div class="select__option" role="option" data-value="no">No, I don't have a disability</div>
+          <div class="select__option" role="option" data-value="decline">I don't wish to answer</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</form>
+
+<div id="status">Waiting for interaction...</div>
+
+<script>
+// ============================================================
+// React-Select Simulation Script
+// Simulates real Greenhouse React-Select keyboard behavior:
+//   - Shift+Enter on focused input opens the dropdown (listbox)
+//   - Typing filters options
+//   - ArrowDown/ArrowUp navigates options
+//   - Enter selects the focused option
+//   - Escape closes without selecting
+// ============================================================
+
+(function() {
+  const log = (msg) => {
+    const el = document.getElementById('status');
+    const ts = new Date().toISOString().slice(11, 23);
+    el.textContent = `[${ts}] ${msg}\n` + el.textContent;
+    console.log(`[ReactSelect-Sim] ${msg}`);
+  };
+
+  document.querySelectorAll('.select__container').forEach(container => {
+    const input = container.querySelector('input');
+    const control = container.querySelector('.select__control');
+    const menu = container.querySelector('.select__menu');
+    const menuList = container.querySelector('.select__menu-list');
+    const placeholder = container.querySelector('.select__placeholder');
+    const singleValue = container.querySelector('.select__single-value');
+    const clearIndicator = container.querySelector('.select__clear-indicator');
+    const allOptions = Array.from(menuList.querySelectorAll('.select__option'));
+    let focusedIndex = -1;
+    let isOpen = false;
+    let selectedValue = null;
+
+    function openMenu() {
+      if (isOpen) return;
+      isOpen = true;
+      menu.classList.add('select__menu--is-open');
+      control.classList.add('select__control--is-focused');
+      input.setAttribute('aria-expanded', 'true');
+      control.setAttribute('aria-expanded', 'true');
+      focusedIndex = -1;
+      // Show all options (remove filter)
+      allOptions.forEach(opt => { opt.style.display = ''; opt.classList.remove('select__option--is-focused'); });
+      log(`Dropdown OPENED for [${container.dataset.field}]`);
+    }
+
+    function closeMenu() {
+      if (!isOpen) return;
+      isOpen = false;
+      menu.classList.remove('select__menu--is-open');
+      input.setAttribute('aria-expanded', 'false');
+      control.setAttribute('aria-expanded', 'false');
+      focusedIndex = -1;
+      allOptions.forEach(opt => opt.classList.remove('select__option--is-focused'));
+      log(`Dropdown CLOSED for [${container.dataset.field}]`);
+    }
+
+    function getVisibleOptions() {
+      return allOptions.filter(opt => opt.style.display !== 'none');
+    }
+
+    function highlightOption(index) {
+      const visible = getVisibleOptions();
+      visible.forEach(opt => opt.classList.remove('select__option--is-focused'));
+      if (index >= 0 && index < visible.length) {
+        focusedIndex = index;
+        visible[index].classList.add('select__option--is-focused');
+        visible[index].scrollIntoView({ block: 'nearest' });
+        log(`Option focused [${index}]: "${visible[index].textContent}"`);
+      }
+    }
+
+    function selectOption(option) {
+      if (!option) return;
+      selectedValue = option.dataset.value;
+      const text = option.textContent;
+
+      // Update visual
+      singleValue.textContent = text;
+      singleValue.style.display = '';
+      placeholder.style.display = 'none';
+      clearIndicator.style.display = '';
+
+      // Mark selected
+      allOptions.forEach(opt => opt.classList.remove('select__option--is-selected'));
+      option.classList.add('select__option--is-selected');
+
+      // Clear input text
+      input.value = '';
+
+      closeMenu();
+      log(`SELECTED [${container.dataset.field}]: "${text}" (value=${selectedValue})`);
+
+      // Dispatch events for React
+      input.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+
+    function clearSelection() {
+      selectedValue = null;
+      singleValue.textContent = '';
+      singleValue.style.display = 'none';
+      placeholder.style.display = '';
+      clearIndicator.style.display = 'none';
+      allOptions.forEach(opt => opt.classList.remove('select__option--is-selected'));
+      input.value = '';
+      log(`CLEARED [${container.dataset.field}]`);
+    }
+
+    function filterOptions(query) {
+      const q = query.toLowerCase();
+      allOptions.forEach(opt => {
+        const match = opt.textContent.toLowerCase().includes(q);
+        opt.style.display = match ? '' : 'none';
+      });
+      focusedIndex = -1;
+      // Auto-focus first visible if query is non-empty
+      const visible = getVisibleOptions();
+      if (visible.length > 0 && q.length > 0) {
+        highlightOption(0);
+      }
+    }
+
+    // Keyboard handler on the input
+    input.addEventListener('keydown', (e) => {
+      // Shift+Enter opens the dropdown (Greenhouse behavior)
+      if (e.key === 'Enter' && e.shiftKey) {
+        e.preventDefault();
+        openMenu();
+        return;
+      }
+
+      if (!isOpen) return;
+
+      if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        const visible = getVisibleOptions();
+        const next = Math.min(focusedIndex + 1, visible.length - 1);
+        highlightOption(next);
+        return;
+      }
+
+      if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        const prev = Math.max(focusedIndex - 1, 0);
+        highlightOption(prev);
+        return;
+      }
+
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        const visible = getVisibleOptions();
+        if (focusedIndex >= 0 && focusedIndex < visible.length) {
+          selectOption(visible[focusedIndex]);
+        }
+        return;
+      }
+
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        closeMenu();
+        return;
+      }
+    });
+
+    // Filter on input
+    input.addEventListener('input', (e) => {
+      if (isOpen) {
+        filterOptions(e.target.value);
+      }
+    });
+
+    // Clear button
+    clearIndicator.addEventListener('click', (e) => {
+      e.stopPropagation();
+      clearSelection();
+    });
+
+    // Click on option
+    allOptions.forEach(opt => {
+      opt.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        selectOption(opt);
+      });
+    });
+
+    // Click on control to toggle
+    control.addEventListener('mousedown', (e) => {
+      if (e.target.closest('.select__clear-indicator')) return;
+      e.preventDefault();
+      input.focus();
+      if (isOpen) closeMenu();
+      else openMenu();
+    });
+
+    // Close on outside click
+    document.addEventListener('mousedown', (e) => {
+      if (!container.contains(e.target)) {
+        closeMenu();
+      }
+    });
+  });
+
+  log('React-Select simulation initialized. Use Shift+Enter to open dropdowns.');
+})();
+</script>
+
+</body>
+</html>
